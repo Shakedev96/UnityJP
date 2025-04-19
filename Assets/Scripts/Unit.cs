@@ -26,7 +26,11 @@ public abstract class Unit : MonoBehaviour,
 
     private void Start()
     {
-
+        if(MainManager.Instance != null)
+        {
+            SetColor(MainManager.Instance.teamColor);
+            Debug.Log("Selected Color from menu set ");
+        }
     }
 
     void SetColor(Color c)

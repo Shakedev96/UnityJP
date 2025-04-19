@@ -20,14 +20,9 @@ public class UserControl : MonoBehaviour
         Marker.SetActive(false);
     }
 
-    private void Update()
+    public void HandleSelection()// this will manage everything that occurs when user left clicks to select forklifts
     {
-        Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        GameCamera.transform.position = GameCamera.transform.position + new Vector3(move.y, 0, -move.x) * PanSpeed * Time.deltaTime;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
+        var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
@@ -41,10 +36,12 @@ public class UserControl : MonoBehaviour
                 var uiInfo = hit.collider.GetComponentInParent<UIMainScene.IUIInfoContent>();
                 UIMainScene.Instance.SetNewInfoContent(uiInfo);
             }
-        }
-        else if (m_Selected != null && Input.GetMouseButtonDown(1))
-        {//right click give order to the unit
-            var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
+
+    }
+
+    public void HandleAction()// will handle the action of the forklifts when user right clicks 
+    {
+        var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
@@ -59,6 +56,20 @@ public class UserControl : MonoBehaviour
                     m_Selected.GoTo(hit.point);
                 }
             }
+    }
+
+    private void Update()
+    {
+        Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        GameCamera.transform.position = GameCamera.transform.position + new Vector3(move.y, 0, -move.x) * PanSpeed * Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+                HandleSelection();
+        }
+        else if (m_Selected != null && Input.GetMouseButtonDown(1))
+        {//right click give order to the unit
+            HandleAction();
         }
 
         MarkerHandling();

@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class ColorPicker : MonoBehaviour
 {
-    public Color[] AvailableColors;
-    public Button ColorButtonPrefab;
+    public Color[] AvailableColors; // array containing set colors
+    public Button ColorButtonPrefab; // color setting button
     
-    public Color SelectedColor { get; private set; }
+    public Color SelectedColor { get; private set; } // color selection pointer
     public System.Action<Color> onColorChanged;
 
-    List<Button> m_ColorButtons = new List<Button>();
+    List<Button> m_ColorButtons = new List<Button>(); // list of buttons to change colors
     
     // Start is called before the first frame update
     public void Init()
@@ -32,6 +32,7 @@ public class ColorPicker : MonoBehaviour
                 newButton.interactable = false;
                 
                 onColorChanged.Invoke(SelectedColor);
+                Debug.Log("Selected color = " + SelectedColor);
             });
             
             m_ColorButtons.Add(newButton);
