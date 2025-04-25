@@ -30,6 +30,7 @@ public class MenuUIHandler : MonoBehaviour
         ColorPicker.onColorChanged += NewColorSelected;
 
         ColorPicker.SelectColor(MainManager.Instance.teamColor);
+        
     }
 
     public void StartGame()
